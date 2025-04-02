@@ -1,0 +1,18 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Autoriser l'accès aux médias
+    RewriteCond %{REQUEST_URI} !^/uploads/
+    RewriteRule ^uploads/.+\.(jpe?g|png|gif|webp|mp4|mov|avi|webm)$ - [L]
+    
+    # Bloquer l'accès direct au dossier
+    RewriteRule ^uploads/?$ - [F,L]
+</IfModule>
+
+# Headers pour les vidéos
+<IfModule mod_headers.c>
+    <FilesMatch "\.(mp4|mov|avi|webm)$">
+        Header set Content-Type "video/mp4"
+        Header set Accept-Ranges bytes
+    </FilesMatch>
+</IfModule>
